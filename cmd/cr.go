@@ -1,10 +1,10 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -28,7 +28,7 @@ var crCmd = &cobra.Command{
 		} else {
 			containerName, _ = getFirstContainer()
 		}
-
+		fmt.Println("Clear cache for container:", containerName)
 		finalCmd := exec.Command("docker", "exec", containerName, "drush", "cr")
 		finalCmd.Stdin = os.Stdin
 		finalCmd.Stdout = os.Stdout
