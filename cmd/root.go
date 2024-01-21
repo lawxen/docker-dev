@@ -56,7 +56,7 @@ func getFirstContainer() (containerName, containerPort string) {
 		fmt.Println("Sth wrong:", err)
 		return
 	}
-	// 解析 Docker Compose 配置
+	// Parse docker compose config
 	var dockerComposeConfig map[string]interface{}
 	err = yaml.Unmarshal(config, &dockerComposeConfig)
 	if err != nil {
@@ -68,6 +68,7 @@ func getFirstContainer() (containerName, containerPort string) {
 		fmt.Println("Sth wrong: services not found")
 		return
 	}
+	// Just get the first container name and port
 	for _, service := range services {
 		serviceMap := service.(map[string]interface{})
 		containerName = serviceMap["container_name"].(string)
