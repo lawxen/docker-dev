@@ -14,7 +14,7 @@ import (
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "docker-dev",
+	Use:   "dev",
 	Short: "A brief description of your application",
 	Long: `A longer description that spans multiple lines and likely contains
 examples and usage of using your application. For example:
@@ -71,7 +71,7 @@ func getFirstContainer() (containerName, containerPort string) {
 	for _, service := range services {
 		serviceMap := service.(map[string]interface{})
 		containerName = serviceMap["container_name"].(string)
-		// containerPort = serviceMap["ports"].([]interface{})[0].(map[string]interface{})["published"].(string)
+		containerPort = serviceMap["ports"].([]interface{})[0].(map[string]interface{})["published"].(string)
 		break
 	}
 	return
