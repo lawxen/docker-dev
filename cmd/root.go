@@ -1,16 +1,16 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package cmd
 
 import (
+	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/spf13/cobra"
+	"sigs.k8s.io/yaml"
 )
-
-
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
@@ -48,4 +48,32 @@ func init() {
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
+func getFirstContainer() (containerName, containerPort string) {
+	// get the config info from the execute result of "docker compose config"
+	composeCmd := exec.Command("docker", "compose", "config")
+	config, err := composeCmd.CombinedOutput()
+	if err != nil {
+		fmt.Println("Sth wrong:", err)
+		return
+	}
+	// 解析 Docker Compose 配置
+	var dockerComposeConfig map[string]interface{}
+	err = yaml.Unmarshal(config, &dockerComposeConfig)
+	if err != nil {
+		fmt.Println("Sth wrong:", err)
+		return
+	}
+	services, ok := dockerComposeConfig["services"].(map[string]interface{})
+	if !ok {
+		fmt.Println("Sth wrong: services not found")
+		return
+	}
+	for _, service := range services {
+		serviceMap := service.(map[string]interface{})
+		containerName = serviceMap["container_name"].(string)
+		// containerPort = serviceMap["ports"].([]interface{})[0].(map[string]interface{})["published"].(string)
+		break
+	}
+	return
 
+}
