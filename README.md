@@ -4,18 +4,18 @@ Examples:
 `go build /usr/local/bin/dev .`  
 `go build -o ~/bin/dev ./`
 ## Commands
-* dev
+* dev  
     list all the commands
-* in
-    dev in
+* in  
+    dev in  
     dev in <container>
-* cr
-    dev cr
-    dev cr <container>
-* drush (@todo)
-    dev drush uli
-* visit (@todo)
-    dev visit
-* login (@todo)
-    dev login
+* cr  
+    dev cr  
+    dev cr <container>  
+* drush (@todo)  
+    dev drush uli  
+* visit (@todo)  
+    dev visit  
+* login (@todo)  
+    dev login  
     dev login <container>
