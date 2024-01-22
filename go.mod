@@ -3,6 +3,7 @@ module github.com/lawxen/docker-dev
 go 1.21.5
 
 require (
+	github.com/skratchdot/open-golang v0.0.0-20200116055534-eef842397966
 	github.com/spf13/cobra v1.8.0
 	sigs.k8s.io/yaml v1.4.0
 )
