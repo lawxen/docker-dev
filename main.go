@@ -1,10 +1,9 @@
 /*
 Copyright © 2024 NAME HERE <EMAIL ADDRESS>
-
 */
 package main
 
-import "github.com/lawxen/docker-dev/cmd"
+import "github.com/lawxen/docker-dev-drupal/cmd"
 
 func main() {
 	cmd.Execute()

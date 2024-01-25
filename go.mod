@@ -1,4 +1,4 @@
-module github.com/lawxen/docker-dev
+module github.com/lawxen/docker-dev-drupal
 
 go 1.21.5
 

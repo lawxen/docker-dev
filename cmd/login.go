@@ -24,8 +24,10 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		containerName, containerPort := getFirstContainer()
-		host := "http://" + containerName + ".docker:" + containerPort
+		containerInfo := getFirstContainer()
+		containerName := containerInfo["container_name"].(string)
+		virtual_host := containerInfo["environment"].(map[string]interface{})["VIRTUAL_HOST"].(string)
+		host := "http://" + virtual_host
 		finalCmd := exec.Command("docker", "exec", containerName, "drush", "uli")
 		output, err := finalCmd.CombinedOutput()
 		if err != nil {

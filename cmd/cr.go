@@ -17,8 +17,8 @@ var crCmd = &cobra.Command{
 	Short: "Clear the drupal cache",
 	Long: `Clear the drupal cache of the first docker compose container or the specified container. For example:
 
-	docker-dev cr
-	docker-dev cr <container_name>`,
+	docker-dev-drupal cr
+	docker-dev-drupal cr <container_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var containerName string
 
@@ -26,7 +26,8 @@ var crCmd = &cobra.Command{
 		if len(args) != 0 {
 			containerName = args[0]
 		} else {
-			containerName, _ = getFirstContainer()
+			containerInfo := getFirstContainer()
+			containerName = containerInfo["container_name"].(string)
 		}
 		fmt.Println("Clear cache for container:", containerName)
 		finalCmd := exec.Command("docker", "exec", containerName, "drush", "cr")

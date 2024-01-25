@@ -41,14 +41,15 @@ func init() {
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
 
-	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.docker-dev.yaml)")
+	// rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.docker-dev-drupal.yaml)")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
 	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-func getFirstContainer() (containerName, containerPort string) {
+func getFirstContainer() (containerInfo map[string]interface{}) {
+	containerInfo = make(map[string]interface{})
 	// get the config info from the execute result of "docker compose config"
 	composeCmd := exec.Command("docker", "compose", "config")
 	config, err := composeCmd.CombinedOutput()
@@ -63,6 +64,7 @@ func getFirstContainer() (containerName, containerPort string) {
 		fmt.Println("Sth wrong:", err)
 		return
 	}
+
 	services, ok := dockerComposeConfig["services"].(map[string]interface{})
 	if !ok {
 		fmt.Println("Sth wrong: services not found")
@@ -70,9 +72,10 @@ func getFirstContainer() (containerName, containerPort string) {
 	}
 	// Just get the first container name and port
 	for _, service := range services {
-		serviceMap := service.(map[string]interface{})
-		containerName = serviceMap["container_name"].(string)
-		containerPort = serviceMap["ports"].([]interface{})[0].(map[string]interface{})["published"].(string)
+		containerInfo = service.(map[string]interface{})
+		// containerInfo["container_name"] = serviceMap["container_name"].(string)
+		// containerInfo["container_port"] = serviceMap["ports"].([]interface{})[0].(map[string]interface{})["published"].(string)
+		// containerInfo["password"] = serviceMap["environment"].(map[string]interface{})["MARIADB_ROOT_PASSWORD"].(string)
 		break
 	}
 	return

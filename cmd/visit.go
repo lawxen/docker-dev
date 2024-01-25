@@ -14,8 +14,9 @@ var visitCmd = &cobra.Command{
 	Short: "Use default browser to visit the web app",
 	Long:  `Use default browser to visit the web app`,
 	Run: func(cmd *cobra.Command, args []string) {
-		containerName, containerPort := getFirstContainer()
-		host := "http://" + containerName + ".docker:" + containerPort
+		containerInfo := getFirstContainer()
+		virtual_host := containerInfo["environment"].(map[string]interface{})["VIRTUAL_HOST"].(string)
+		host := "http://" + virtual_host
 
 		err := open.Run(host)
 		if err != nil {

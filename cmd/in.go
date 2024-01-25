@@ -16,8 +16,8 @@ var inCmd = &cobra.Command{
 	Short: "Docker exec into the first container of docker compose or the specified container",
 	Long: `Docker exec into the first container of docker compose or the specified container. For example:
 
-docker-dev in
-docker-dev in <container_name>`,
+docker-dev-drupal in
+docker-dev-drupal in <container_name>`,
 	Run: func(cmd *cobra.Command, args []string) {
 		var containerName string
 
@@ -25,7 +25,8 @@ docker-dev in <container_name>`,
 		if len(args) != 0 {
 			containerName = args[0]
 		} else {
-			containerName, _ = getFirstContainer()
+			containerInfo := getFirstContainer()
+			containerName = containerInfo["container_name"].(string)
 		}
 
 		finalCmd := exec.Command("docker", "exec", "-it", containerName, "bash")
