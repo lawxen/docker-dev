@@ -29,7 +29,7 @@ docker-dev-drupal in <container_name>`,
 			containerName = containerInfo["container_name"].(string)
 		}
 
-		finalCmd := exec.Command("docker", "exec", "-it", containerName, "bash")
+		finalCmd := exec.Command("docker", "exec", "-it", containerName, "sh")
 		finalCmd.Stdin = os.Stdin
 		finalCmd.Stdout = os.Stdout
 		finalCmd.Stderr = os.Stderr
