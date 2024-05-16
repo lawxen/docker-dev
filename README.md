@@ -1,7 +1,7 @@
 ## Build
 `go build <directory>/commandName .`  
 Examples:   
-`go build /usr/local/bin/dev .`  
+`go build -o /usr/local/bin/dev .`  
 `go build -o ~/bin/dev ./`
 ## Commands
 * dev  
